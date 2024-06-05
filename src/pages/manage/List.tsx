@@ -1,7 +1,8 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import styles from './common.module.scss'
 import QuestionCard from '../../components/QuestionCard'
 import { QuestionCardTypes } from '../../types/question'
+import { Typography } from 'antd'
 
 const questionCardList: Array<QuestionCardTypes> = [
   {
@@ -22,17 +23,22 @@ const questionCardList: Array<QuestionCardTypes> = [
   },
 ]
 
+const { Title } = Typography
+
 const List: FunctionComponent = () => {
+  const [questionList] = useState(questionCardList)
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.left}></div>
-        <div className={styles.right}></div>
+        <div className={styles.left}>
+          <Title level={3}>我的问卷</Title>
+        </div>
+        <div className={styles.right}>搜索</div>
       </div>
 
       <div className={styles.content}>
-        {questionCardList.length > 0 &&
-          questionCardList.map(item => {
+        {questionList.length > 0 &&
+          questionList.map(item => {
             return <QuestionCard key={item._id} {...item} />
           })}
       </div>

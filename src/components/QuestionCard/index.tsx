@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import styles from './index.module.scss'
 import { QuestionCardTypes } from '../../types/question'
-import { Button, Space, Divider, Tag } from 'antd'
+import { Button, Space, Divider, Tag, Modal, message } from 'antd'
 import { Link } from 'react-router-dom'
 import {
   EditOutlined,
@@ -13,10 +13,25 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { RouterEnum } from '../../router/routerMap'
 
+const { confirm } = Modal
+
 const QuestionCard: FunctionComponent<QuestionCardTypes> = (props: QuestionCardTypes) => {
   const { _id, title, isStar, isPublished, answerCount, createdAt } = props
-  console.log(_id, isStar)
   const navigate = useNavigate()
+  const handleAction = (actionName: string) => {
+    confirm({
+      title: `确定要${actionName}该问卷吗?`,
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        message.success('删除问卷')
+      },
+      onCancel() {
+        message.info('取消删除')
+      },
+    })
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -67,13 +82,28 @@ const QuestionCard: FunctionComponent<QuestionCardTypes> = (props: QuestionCardT
         </div>
         <div className={styles['right-content']}>
           <Space>
-            <Button icon={<StarOutlined />} type="text" size="small">
+            <Button
+              icon={<StarOutlined />}
+              type="text"
+              size="small"
+              onClick={() => handleAction('标星')}
+            >
               {isStar ? '取消标星' : '标星'}
             </Button>
-            <Button icon={<CopyOutlined />} type="text" size="small">
+            <Button
+              icon={<CopyOutlined />}
+              type="text"
+              size="small"
+              onClick={() => handleAction('复制')}
+            >
               复制
             </Button>
-            <Button icon={<DeleteOutlined />} type="text" size="small">
+            <Button
+              icon={<DeleteOutlined />}
+              type="text"
+              size="small"
+              onClick={() => handleAction('删除')}
+            >
               删除
             </Button>
           </Space>
