@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from 'react'
 import styles from './common.module.scss'
 import { QuestionCardTypes } from '../../types/question'
 import { Typography, Empty, Table, Tag, Button, Space, Modal } from 'antd'
+import ListSearch from '../../components/ListSearch'
 
 const questionCardList: Array<QuestionCardTypes> = [
   {
@@ -109,7 +110,9 @@ const Trash: FunctionComponent = () => {
         <div className={styles.left}>
           <Title level={3}>回收站</Title>
         </div>
-        <div className={styles.right}>搜索</div>
+        <div className={styles.right}>
+          <ListSearch />
+        </div>
       </div>
 
       <div className={styles.content}>
