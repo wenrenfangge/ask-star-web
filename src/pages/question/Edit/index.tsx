@@ -1,6 +1,5 @@
 import { useLoadQuestionData } from '@/hooks/useLoadQuestionData'
-import React, { FunctionComponent, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { FunctionComponent } from 'react'
 
 const Edit: FunctionComponent = () => {
   const { loading, data, error } = useLoadQuestionData()

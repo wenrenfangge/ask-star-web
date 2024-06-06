@@ -1,33 +1,15 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import styles from './common.module.scss'
 import QuestionCard from '../../components/QuestionCard'
-import { QuestionCardTypes } from '../../types/question'
-import { Typography } from 'antd'
+import { Typography, Spin, Empty } from 'antd'
 import ListSearch from '../../components/ListSearch'
 
-const questionCardList: Array<QuestionCardTypes> = [
-  {
-    _id: '1',
-    title: '问卷1',
-    isStar: true,
-    isPublished: true,
-    answerCount: 4,
-    createdAt: '2024-05-11 12:00:00',
-  },
-  {
-    _id: '2',
-    title: '问卷2',
-    isStar: true,
-    isPublished: true,
-    answerCount: 4,
-    createdAt: '2024-05-11 12:00:00',
-  },
-]
+import { useLoadQuestionList } from '@/hooks/useLoadQuestionList'
 
 const { Title } = Typography
 
 const List: FunctionComponent = () => {
-  const [questionList] = useState(questionCardList)
+  const { list, loading, total } = useLoadQuestionList()
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -40,13 +22,16 @@ const List: FunctionComponent = () => {
       </div>
 
       <div className={styles.content}>
-        {questionList.length > 0 &&
-          questionList.map(item => {
+        {!loading && list.length === 0 && <Empty description="暂无数据" />}
+        {!loading &&
+          list.length > 0 &&
+          list.map(item => {
             return <QuestionCard key={item._id} {...item} />
           })}
       </div>
 
       <div className={styles.footer}></div>
+      <div className={styles.loading}>{loading && <Spin size="large" />}</div>
     </div>
   )
 }

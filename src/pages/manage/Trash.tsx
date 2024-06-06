@@ -1,33 +1,14 @@
 import React, { FunctionComponent, useState } from 'react'
 import styles from './common.module.scss'
-import { QuestionCardTypes } from '../../types/question'
-import { Typography, Empty, Table, Tag, Button, Space, Modal } from 'antd'
+import { Typography, Empty, Table, Tag, Button, Space, Modal, Spin } from 'antd'
 import ListSearch from '../../components/ListSearch'
-
-const questionCardList: Array<QuestionCardTypes> = [
-  {
-    _id: '1',
-    title: '问卷1',
-    isStar: true,
-    isPublished: true,
-    answerCount: 4,
-    createdAt: '2024-05-11 12:00:00',
-  },
-  {
-    _id: '2',
-    title: '问卷2',
-    isStar: true,
-    isPublished: true,
-    answerCount: 4,
-    createdAt: '2024-05-11 12:00:00',
-  },
-]
+import { useLoadQuestionList } from '@/hooks/useLoadQuestionList'
 
 const { Title } = Typography
 const { confirm } = Modal
 
 const Trash: FunctionComponent = () => {
-  const [trashList, setTrashList] = useState(questionCardList)
+  const { list, loading, total } = useLoadQuestionList({ isDeleted: true })
   const [selectedIdsList, setSelectedIdsList] = useState<Array<string>>([])
   const tableColumns = [
     {
@@ -91,7 +72,7 @@ const Trash: FunctionComponent = () => {
       <div>
         <Table
           columns={tableColumns}
-          dataSource={trashList}
+          dataSource={list}
           pagination={false}
           rowKey={'_id'}
           rowSelection={{
@@ -116,11 +97,12 @@ const Trash: FunctionComponent = () => {
       </div>
 
       <div className={styles.content}>
-        {trashList.length === 0 && <Empty description="暂无数据" />}
-        {trashList.length > 0 && TableElement}
+        {!loading && list.length === 0 && <Empty description="暂无数据" />}
+        {list.length > 0 && TableElement}
       </div>
 
       <div className={styles.footer}></div>
+      <div className={styles.loading}>{loading && <Spin size="large" />}</div>
     </div>
   )
 }

@@ -13,7 +13,7 @@ instance.interceptors.request.use(config => {
 
 // 响应拦截器
 instance.interceptors.response.use(response => {
-  const resData = (response.data || {}) as ResponseType
+  const resData = (response.data || {}) as ResponseType<unknown>
   const { code, msg, data } = resData
   if (code !== 200) {
     if (message) {
