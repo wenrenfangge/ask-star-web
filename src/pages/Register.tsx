@@ -33,15 +33,43 @@ const Register: FunctionComponent = () => {
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >
-          <Form.Item label="用户名" name="username">
+          <Form.Item
+            label="用户名"
+            name="username"
+            rules={[
+              { required: true, message: '请输入用户名' },
+              { type: 'string', min: 5, max: 20, message: '用户名长度在5到20之间' },
+              { pattern: /^[a-zA-Z0-9_-]+$/, message: '用户名只能包含字母、数字、下划线、中划线' },
+            ]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label="密码" name="password">
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[{ required: true, message: '请输入密码' }]}
+          >
             <Input.Password />
           </Form.Item>
 
-          <Form.Item label="确认密码" name="confirmPassword">
+          <Form.Item
+            label="确认密码"
+            name="confirmPassword"
+            dependencies={['password']}
+            rules={[
+              { required: true, message: '请再次输入密码' },
+              // 校验两次输入的密码是否一致
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve()
+                  }
+                  return Promise.reject(new Error('两次输入的密码不一致'))
+                },
+              }),
+            ]}
+          >
             <Input.Password />
           </Form.Item>
 

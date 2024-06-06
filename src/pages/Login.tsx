@@ -68,16 +68,20 @@ const Login: FunctionComponent = () => {
           <Form.Item
             name="username"
             label="用户名"
-            rules={[{ required: true, message: '请输入用户名' }]}
+            rules={[
+              { required: true, message: '请输入用户名' },
+              { type: 'string', min: 5, max: 20, message: '用户名长度在5到20之间' },
+              { pattern: /^[a-zA-Z0-9_-]+$/, message: '用户名只能包含字母、数字、下划线、中划线' },
+            ]}
           >
-            <Input placeholder="用户名" />
+            <Input placeholder="请输入用户名" />
           </Form.Item>
           <Form.Item
             name="password"
             label="密码"
             rules={[{ required: true, message: '请输入密码' }]}
           >
-            <Input.Password placeholder="密码" />
+            <Input.Password placeholder="请输入密码" />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 6, span: 18 }} name={'remember'} valuePropName="checked">
             <Checkbox>记住我</Checkbox>
