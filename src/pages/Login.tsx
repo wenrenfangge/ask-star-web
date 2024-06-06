@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { RouterEnum } from '@/router/routerMap'
 import { LoginType } from '@/types/Login'
 import { LOGIN_ACCOUNT_TYPE } from '@/constant'
+import axios from 'axios'
 
 const { Title } = Typography
 
@@ -28,6 +29,7 @@ const Login: FunctionComponent = () => {
     } else {
       forgetAccount()
     }
+    //登录请求
   }
   const onFinishFaildhandle = () => {
     // 登录失败逻辑
