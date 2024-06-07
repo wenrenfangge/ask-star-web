@@ -14,5 +14,5 @@ export type QuestionCardRequest = {
   keyword?: string
   isStar?: boolean
   isDeleted?: boolean
-} & Pick<PaginationType, 'currentPage' | 'pageSize'> &
+} & Pick<PaginationType, 'page' | 'pageSize'> &
   Partial<QuestionCardTypes>

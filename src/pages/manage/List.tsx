@@ -4,12 +4,12 @@ import QuestionCard from '../../components/QuestionCard'
 import { Typography, Spin, Empty } from 'antd'
 import ListSearch from '../../components/ListSearch'
 
-import { useLoadQuestionList } from '@/hooks/useLoadQuestionList'
+import { useLoadQuestionListData } from '@/hooks/useLoadQuestionListData'
 
 const { Title } = Typography
 
 const List: FunctionComponent = () => {
-  const { list, loading, total } = useLoadQuestionList()
+  const { list, loading, total } = useLoadQuestionListData()
   return (
     <div className={styles.container}>
       <div className={styles.header}>

@@ -3,11 +3,12 @@ import styles from './common.module.scss'
 import QuestionCard from '../../components/QuestionCard'
 import { Typography, Empty, Spin } from 'antd'
 import ListSearch from '../../components/ListSearch'
-import { useLoadQuestionList } from '@/hooks/useLoadQuestionList'
+import { useLoadQuestionListData } from '@/hooks/useLoadQuestionListData'
+import ListPagination from '@/components/ListPagination'
 const { Title } = Typography
 
 const Star: FunctionComponent = () => {
-  const { list, loading, total } = useLoadQuestionList({ isStar: true })
+  const { list, loading, total } = useLoadQuestionListData({ isStar: true })
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -28,7 +29,9 @@ const Star: FunctionComponent = () => {
           })}
       </div>
 
-      <div className={styles.footer}>分页</div>
+      <div className={styles.footer}>
+        <ListPagination total={total} />
+      </div>
       <div className={styles.loading}>{loading && <Spin size="large" />}</div>
     </div>
   )

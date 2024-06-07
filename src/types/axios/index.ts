@@ -12,7 +12,7 @@ export interface ResponseDataType<T> extends PaginationType {
  * 分页字段
  */
 export interface PaginationType {
-  currentPage: number
+  page: number
   pageSize: number
   total: number
 }

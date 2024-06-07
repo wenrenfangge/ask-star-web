@@ -2,13 +2,13 @@ import React, { FunctionComponent, useState } from 'react'
 import styles from './common.module.scss'
 import { Typography, Empty, Table, Tag, Button, Space, Modal, Spin } from 'antd'
 import ListSearch from '../../components/ListSearch'
-import { useLoadQuestionList } from '@/hooks/useLoadQuestionList'
+import { useLoadQuestionListData } from '@/hooks/useLoadQuestionListData'
 
 const { Title } = Typography
 const { confirm } = Modal
 
 const Trash: FunctionComponent = () => {
-  const { list, loading, total } = useLoadQuestionList({ isDeleted: true })
+  const { list, loading, total } = useLoadQuestionListData({ isDeleted: true })
   const [selectedIdsList, setSelectedIdsList] = useState<Array<string>>([])
   const tableColumns = [
     {
