@@ -12,19 +12,58 @@ import {
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { RouterEnum } from '../../router/routerMap'
+import { copyQuestion, deleteQuestion, updateQuestion } from '@/api/question'
+import { useRequest } from 'ahooks'
+import { ResponseDataType } from '@/types/axios'
 
 const { confirm } = Modal
 
 const QuestionCard: FunctionComponent<QuestionCardTypes> = (props: QuestionCardTypes) => {
-  const { _id, title, isStar, isPublished, answerCount, createdAt } = props
+  const { _id, title, isStar, isPublished, answerCount, createdAt, deleteSuccess } = props
+  const [visibleStar, setVisibleStar] = React.useState(isStar)
   const navigate = useNavigate()
+
+  const { loading: changeStarLoading, run: changeStar } = useRequest(
+    () => updateQuestion({ _id: _id, isStar: !isStar }),
+    {
+      manual: true,
+      onSuccess() {
+        setVisibleStar(!visibleStar)
+      },
+    }
+  )
+  const { run: copyQuestionFn, loading: copyLoading } = useRequest(() => copyQuestion(_id), {
+    manual: true,
+    onSuccess(res: ResponseDataType<QuestionCardTypes>) {
+      const { _id } = res
+      navigate(`${RouterEnum.QUESTION_EDIT}/${_id}`)
+    },
+  })
+  const { run: deleteQuestionFn, loading: deleteLoading } = useRequest(() => deleteQuestion(_id), {
+    manual: true,
+    onSuccess() {
+      deleteSuccess && deleteSuccess()
+    },
+  })
   const handleAction = (actionName: string) => {
     confirm({
       title: `确定要${actionName}该问卷吗?`,
       okText: '确定',
       cancelText: '取消',
       onOk() {
-        message.success('删除问卷')
+        switch (actionName) {
+          case '删除':
+            deleteQuestionFn()
+            break
+          case '复制':
+            copyQuestionFn()
+            break
+          case '标星':
+            changeStar()
+            break
+          default:
+            break
+        }
       },
       onCancel() {
         message.info('取消删除')
@@ -44,7 +83,7 @@ const QuestionCard: FunctionComponent<QuestionCardTypes> = (props: QuestionCardT
             }
           >
             <Space>
-              {isStar && <StarOutlined style={{ color: 'red' }} />}
+              {visibleStar && <StarOutlined style={{ color: 'red' }} />}
               {title}
             </Space>
           </Link>
@@ -86,14 +125,16 @@ const QuestionCard: FunctionComponent<QuestionCardTypes> = (props: QuestionCardT
               icon={<StarOutlined />}
               type="text"
               size="small"
+              disabled={changeStarLoading}
               onClick={() => handleAction('标星')}
             >
-              {isStar ? '取消标星' : '标星'}
+              {visibleStar ? '取消标星' : '标星'}
             </Button>
             <Button
               icon={<CopyOutlined />}
               type="text"
               size="small"
+              disabled={copyLoading}
               onClick={() => handleAction('复制')}
             >
               复制
@@ -102,6 +143,7 @@ const QuestionCard: FunctionComponent<QuestionCardTypes> = (props: QuestionCardT
               icon={<DeleteOutlined />}
               type="text"
               size="small"
+              loading={deleteLoading}
               onClick={() => handleAction('删除')}
             >
               删除

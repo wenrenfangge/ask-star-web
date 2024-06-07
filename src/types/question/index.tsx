@@ -8,7 +8,7 @@ export type QuestionCardTypes = {
   answerCount: number
   createdAt: string
   isDeleted?: boolean
-}
+} & QuestionCardEvents
 
 export type QuestionCardRequest = {
   keyword?: string
@@ -16,3 +16,7 @@ export type QuestionCardRequest = {
   isDeleted?: boolean
 } & Pick<PaginationType, 'page' | 'pageSize'> &
   Partial<QuestionCardTypes>
+
+export interface QuestionCardEvents {
+  deleteSuccess?: () => void
+}

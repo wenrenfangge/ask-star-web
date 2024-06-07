@@ -63,6 +63,15 @@ const List: FunctionComponent = () => {
     }
     return <span>没有更多数据了</span>
   }
+  // 删除问卷
+  const deleteSuccess = () => {
+    if (list.length <= 1) {
+      setPage(1)
+    } else {
+      setPage(page - 1)
+    }
+    loadListData()
+  }
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -77,7 +86,7 @@ const List: FunctionComponent = () => {
       <div className={styles.content}>
         {list.length > 0 &&
           list.map(item => {
-            return <QuestionCard key={item._id} {...item} />
+            return <QuestionCard key={item._id} {...item} deleteSuccess={deleteSuccess} />
           })}
       </div>
 
