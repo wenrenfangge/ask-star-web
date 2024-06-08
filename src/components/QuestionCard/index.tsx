@@ -12,7 +12,7 @@ import {
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { RouterEnum } from '../../router/routerMap'
-import { copyQuestion, deleteQuestion, updateQuestion } from '@/api/question'
+import { copyQuestion, updateQuestion } from '@/api/question'
 import { useRequest } from 'ahooks'
 import { ResponseDataType } from '@/types/axios'
 
@@ -39,12 +39,15 @@ const QuestionCard: FunctionComponent<QuestionCardTypes> = (props: QuestionCardT
       navigate(`${RouterEnum.QUESTION_EDIT}/${_id}`)
     },
   })
-  const { run: deleteQuestionFn, loading: deleteLoading } = useRequest(() => deleteQuestion(_id), {
-    manual: true,
-    onSuccess() {
-      deleteSuccess && deleteSuccess()
-    },
-  })
+  const { run: deleteQuestionFn, loading: deleteLoading } = useRequest(
+    () => updateQuestion({ _id: _id, isDeleted: true }),
+    {
+      manual: true,
+      onSuccess() {
+        deleteSuccess && deleteSuccess()
+      },
+    }
+  )
   const handleAction = (actionName: string) => {
     confirm({
       title: `确定要${actionName}该问卷吗?`,

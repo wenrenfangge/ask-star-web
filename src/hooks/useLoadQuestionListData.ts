@@ -12,7 +12,11 @@ export const useLoadQuestionListData = (option: Partial<QuestionCardRequest> = {
   const keyword = searchParams.get(LIST_SEARCH_PRIMARY_KEY) || ''
   const page = parseInt(searchParams.get(LIST_SEARCH_PAGE_KEY) || '') || 1
   const pageSize = parseInt(searchParams.get('pageSize') || '') || DEFAULT_PAGE_SIZE
-  const { data = {}, loading } = useRequest(
+  const {
+    data = {},
+    loading,
+    refresh,
+  } = useRequest(
     () =>
       getQuestionList({
         page: page,
@@ -31,5 +35,6 @@ export const useLoadQuestionListData = (option: Partial<QuestionCardRequest> = {
     list,
     total,
     loading,
+    refresh,
   }
 }

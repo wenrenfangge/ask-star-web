@@ -1,14 +1,18 @@
 import React, { FunctionComponent, useState } from 'react'
 import styles from './common.module.scss'
-import { Typography, Empty, Table, Tag, Button, Space, Modal, Spin } from 'antd'
+import { Typography, Empty, Table, Tag, Button, Space, Modal, Spin, message } from 'antd'
 import ListSearch from '../../components/ListSearch'
 import { useLoadQuestionListData } from '@/hooks/useLoadQuestionListData'
+import { useRequest } from 'ahooks'
+import { updateQuestion } from '@/api/question'
+import ListPagination from '@/components/ListPagination'
+import { TipTypes } from '@/types/axios'
 
 const { Title } = Typography
 const { confirm } = Modal
 
 const Trash: FunctionComponent = () => {
-  const { list, loading, total } = useLoadQuestionListData({ isDeleted: true })
+  const { list, loading, total, refresh } = useLoadQuestionListData({ isDeleted: true })
   const [selectedIdsList, setSelectedIdsList] = useState<Array<string>>([])
   const tableColumns = [
     {
@@ -41,9 +45,22 @@ const Trash: FunctionComponent = () => {
       key: 'createdAt',
     },
   ]
-  const remakeHandle = () => {
-    console.log('恢复')
-  }
+  const { run: recover, loading: recoverLoading } = useRequest(
+    async () => {
+      for await (const id of selectedIdsList) {
+        await updateQuestion({ _id: id, isDeleted: false }, { isMessageTip: false })
+      }
+    },
+    {
+      manual: true,
+      debounceWait: 500,
+      onSuccess() {
+        message.success('恢复成功')
+        refresh()
+      },
+    }
+  )
+
   const deleteHandle = () => {
     confirm({
       title: '确定要删除吗？',
@@ -59,7 +76,12 @@ const Trash: FunctionComponent = () => {
     <>
       <div style={{ marginBottom: '16px' }}>
         <Space>
-          <Button type="primary" disabled={selectedIdsList.length === 0} onClick={remakeHandle}>
+          <Button
+            type="primary"
+            disabled={selectedIdsList.length === 0}
+            loading={recoverLoading}
+            onClick={recover}
+          >
             恢复
           </Button>
           <Button danger disabled={selectedIdsList.length === 0} onClick={deleteHandle}>
@@ -101,7 +123,9 @@ const Trash: FunctionComponent = () => {
         {list.length > 0 && TableElement}
       </div>
 
-      <div className={styles.footer}></div>
+      <div className={styles.footer}>
+        <ListPagination total={total} />
+      </div>
       <div className={styles.loading}>{loading && <Spin size="large" />}</div>
     </div>
   )

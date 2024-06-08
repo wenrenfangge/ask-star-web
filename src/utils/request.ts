@@ -1,5 +1,5 @@
-import { message } from 'antd'
-import { ResponseType } from '@/types/axios'
+import { message, notification } from 'antd'
+import { ResponseType, TipTypes } from '@/types/axios'
 import axios from 'axios'
 
 const request = axios.create({
@@ -14,6 +14,11 @@ request.interceptors.request.use(config => {
   return config
 })
 actionRequest.interceptors.request.use(config => {
+  const { isMessageTip, tipType } = config.actionTipsConfig || {}
+  config.actionTipsConfig = {
+    isMessageTip: isMessageTip !== undefined || isMessageTip != null ? isMessageTip : true,
+    tipType: tipType ? tipType : TipTypes.MESSAGE,
+  }
   return config
 })
 
@@ -31,15 +36,30 @@ request.interceptors.response.use(response => {
 })
 
 actionRequest.interceptors.response.use(response => {
+  const { actionTipsConfig } = response.config
+  const { tipType, isMessageTip } = actionTipsConfig || {}
+  let tipComponent: any = null
+  switch (tipType) {
+    case TipTypes.MESSAGE:
+      tipComponent = message
+      break
+    case TipTypes.NOTIFICATION:
+      tipComponent = notification
+      break
+    default:
+      tipComponent = message
+  }
   const resData = (response.data || {}) as ResponseType<unknown>
   const { code, msg, data } = resData
   if (code !== 200) {
     if (message) {
-      message.error(msg)
+      tipComponent.error(msg)
     }
     throw new Error(msg || 'Error')
   } else {
-    message.success(msg || '操作成功')
+    if (isMessageTip) {
+      tipComponent.success(msg || '操作成功')
+    }
   }
   return data as any
 })

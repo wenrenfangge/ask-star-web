@@ -1,4 +1,4 @@
-import { ResponseDataType } from '@/types/axios'
+import { ActionTipsConfig, AxiosExtraConfig, ResponseDataType } from '@/types/axios'
 import { QuestionCardRequest, QuestionCardTypes } from '@/types/question'
 import { request, actionRequest } from '@/utils/request'
 
@@ -26,11 +26,12 @@ export function getQuestionList(
     params: data,
   })
 }
-// 更新问卷
-export function updateQuestion(data: Partial<QuestionCardTypes>) {
+// 更新答卷
+export function updateQuestion(data: Partial<QuestionCardTypes>, messageTip?: ActionTipsConfig) {
   return actionRequest({
     url: `/api/question/${data._id}`,
     method: 'patch',
+    actionTipsConfig: messageTip,
     data,
   })
 }
@@ -42,9 +43,12 @@ export function copyQuestion(id: string): Promise<ResponseDataType<QuestionCardT
   })
 }
 // 删除问卷
-export function deleteQuestion(id: string): Promise<ResponseDataType<QuestionCardTypes>> {
+export function deleteQuestion(
+  data: Partial<QuestionCardTypes>
+): Promise<ResponseDataType<QuestionCardTypes>> {
   return actionRequest({
-    url: `/api/question/${id}`,
+    url: `/api/question/${data._id}`,
     method: 'delete',
+    data,
   })
 }

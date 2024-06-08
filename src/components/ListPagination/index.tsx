@@ -33,6 +33,7 @@ const ListPagination = (props: Partial<PaginationType>) => {
         current={current}
         total={total}
         pageSize={pageSize}
+        showSizeChanger
         onChange={PaginationChangeHandle}
       />
     </div>
