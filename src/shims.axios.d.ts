@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from './shims.axios.d'
 import { ActionTipsConfig } from './types/axios'
 
 declare module 'axios' {

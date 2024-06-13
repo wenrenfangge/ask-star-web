@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, InternalAxiosRequestConfig, CreateAxiosDefaults } from 'axios'
+import { InternalAxiosRequestConfig } from 'axios'
 
 export type ResponseType<T> = {
   code: number
@@ -8,6 +8,7 @@ export type ResponseType<T> = {
 
 export interface ResponseDataType<T> extends PaginationType {
   list?: Array<T>
+  data?: T
   [key: string]: unknown
 }
 /**

@@ -2,21 +2,36 @@ import React, { FunctionComponent, useEffect } from 'react'
 import styles from './Login.module.scss'
 import { Space, Button, Input, Form, Checkbox, Typography, notification } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { RouterEnum } from '@/router/routerMap'
 import { LoginType } from '@/types/Login'
 import { LOGIN_ACCOUNT_TYPE } from '@/constant'
-import axios from 'axios'
+import { login } from '@/api/user'
+import { useRequest } from 'ahooks'
+import { setToken } from '@/utils/userToken'
 
 const { Title } = Typography
 
 const Login: FunctionComponent = () => {
   const [form] = Form.useForm()
+  const navigate = useNavigate()
   useEffect(() => {
     getAccount() && form.setFieldsValue(getAccount())
   }, [])
+  const { run: loginFn, loading: loginLoading } = useRequest((values: LoginType) => login(values), {
+    manual: true,
+    onSuccess: res => {
+      notification.success({
+        message: '登录成功',
+        description: '欢迎回来',
+      })
+      const { token } = res
+      token && setToken(token)
+      navigate(RouterEnum.MANAGE_LIST)
+    },
+  })
   const onFinishhandle = (values: LoginType) => {
-    const { username, password, remember } = values || {}
+    const { username, password, remember, nickname } = values || {}
     if (!username || !password) {
       notification.error({
         message: '登录失败',
@@ -30,6 +45,12 @@ const Login: FunctionComponent = () => {
       forgetAccount()
     }
     //登录请求
+    const requestData: LoginType = {
+      username: username,
+      password: password,
+      nickname: nickname || username,
+    }
+    loginFn(requestData)
   }
   const onFinishFaildhandle = () => {
     // 登录失败逻辑
@@ -91,7 +112,7 @@ const Login: FunctionComponent = () => {
 
           <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
             <Space>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" loading={loginLoading}>
                 登录
               </Button>
               <Link to={RouterEnum.REGISTER}>注册新用户</Link>

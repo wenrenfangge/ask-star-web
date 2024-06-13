@@ -1,6 +1,7 @@
 import { message, notification } from 'antd'
 import { ResponseType, TipTypes } from '@/types/axios'
 import axios from 'axios'
+import { getToken } from './userToken'
 
 const request = axios.create({
   timeout: 10 * 1000,
@@ -11,6 +12,7 @@ const actionRequest = axios.create({
 
 // 请求拦截器
 request.interceptors.request.use(config => {
+  config.headers.Authorization = `Bearer ${getToken()}`
   return config
 })
 actionRequest.interceptors.request.use(config => {
@@ -19,6 +21,7 @@ actionRequest.interceptors.request.use(config => {
     isMessageTip: isMessageTip !== undefined || isMessageTip != null ? isMessageTip : true,
     tipType: tipType ? tipType : TipTypes.MESSAGE,
   }
+  config.headers.Authorization = `Bearer ${getToken()}`
   return config
 })
 

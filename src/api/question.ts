@@ -1,16 +1,16 @@
-import { ActionTipsConfig, AxiosExtraConfig, ResponseDataType } from '@/types/axios'
+import { ActionTipsConfig, ResponseDataType } from '@/types/axios'
 import { QuestionCardRequest, QuestionCardTypes } from '@/types/question'
 import { request, actionRequest } from '@/utils/request'
 
 // 获取单个问卷信息
-export function getQuestionInfo(id: string): Promise<ResponseDataType<QuestionCardTypes>> {
+export const getQuestionInfo = (id: string): Promise<ResponseDataType<QuestionCardTypes>> => {
   return request({
     url: `/api/question/${id}`,
     method: 'get',
   })
 }
 //创建问卷
-export function createQuestion(): Promise<ResponseDataType<QuestionCardTypes>> {
+export const createQuestion = (): Promise<ResponseDataType<QuestionCardTypes>> => {
   return request({
     url: `/api/question`,
     method: 'post',
@@ -27,7 +27,7 @@ export function getQuestionList(
   })
 }
 // 更新答卷
-export function updateQuestion(data: Partial<QuestionCardTypes>, messageTip?: ActionTipsConfig) {
+export const updateQuestion = (data: Partial<QuestionCardTypes>, messageTip?: ActionTipsConfig) => {
   return actionRequest({
     url: `/api/question/${data._id}`,
     method: 'patch',
@@ -36,19 +36,23 @@ export function updateQuestion(data: Partial<QuestionCardTypes>, messageTip?: Ac
   })
 }
 // 复制问卷
-export function copyQuestion(id: string): Promise<ResponseDataType<QuestionCardTypes>> {
+export const copyQuestion = (id: string): Promise<ResponseDataType<QuestionCardTypes>> => {
   return actionRequest({
     url: `/api/question/${id}/copy`,
     method: 'post',
   })
 }
-// 删除问卷
-export function deleteQuestion(
-  data: Partial<QuestionCardTypes>
-): Promise<ResponseDataType<QuestionCardTypes>> {
+// 批量彻底删除问卷
+export const deleteQuestion = (
+  ids: Array<string | number>,
+  messageTip?: ActionTipsConfig
+): Promise<ResponseDataType<QuestionCardTypes>> => {
   return actionRequest({
-    url: `/api/question/${data._id}`,
+    url: `/api/question`,
     method: 'delete',
-    data,
+    actionTipsConfig: messageTip,
+    data: {
+      ids: ids,
+    },
   })
 }

@@ -4,9 +4,8 @@ import { Typography, Empty, Table, Tag, Button, Space, Modal, Spin, message } fr
 import ListSearch from '../../components/ListSearch'
 import { useLoadQuestionListData } from '@/hooks/useLoadQuestionListData'
 import { useRequest } from 'ahooks'
-import { updateQuestion } from '@/api/question'
+import { deleteQuestion, updateQuestion } from '@/api/question'
 import ListPagination from '@/components/ListPagination'
-import { TipTypes } from '@/types/axios'
 
 const { Title } = Typography
 const { confirm } = Modal
@@ -45,6 +44,10 @@ const Trash: FunctionComponent = () => {
       key: 'createdAt',
     },
   ]
+  const refreshData = () => {
+    refresh()
+    setSelectedIdsList([])
+  }
   const { run: recover, loading: recoverLoading } = useRequest(
     async () => {
       for await (const id of selectedIdsList) {
@@ -56,10 +59,17 @@ const Trash: FunctionComponent = () => {
       debounceWait: 500,
       onSuccess() {
         message.success('恢复成功')
-        refresh()
+        refreshData()
       },
     }
   )
+  const { run: del, loading: delLoading } = useRequest(() => deleteQuestion(selectedIdsList), {
+    manual: true,
+    debounceWait: 500,
+    onSuccess() {
+      refreshData()
+    },
+  })
 
   const deleteHandle = () => {
     confirm({
@@ -68,7 +78,7 @@ const Trash: FunctionComponent = () => {
       okText: '确定',
       cancelText: '取消',
       onOk() {
-        console.log('删除')
+        del()
       },
     })
   }
@@ -84,7 +94,12 @@ const Trash: FunctionComponent = () => {
           >
             恢复
           </Button>
-          <Button danger disabled={selectedIdsList.length === 0} onClick={deleteHandle}>
+          <Button
+            danger
+            disabled={selectedIdsList.length === 0}
+            loading={delLoading}
+            onClick={deleteHandle}
+          >
             彻底删除
           </Button>
         </Space>

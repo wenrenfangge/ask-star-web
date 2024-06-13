@@ -2,14 +2,27 @@ import React, { FunctionComponent } from 'react'
 import { Typography, Space, Form, Input, Button } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
 import styles from './Register.module.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { RouterEnum } from '@/router/routerMap'
+import { LoginType } from '@/types/Login'
+import { useRequest } from 'ahooks'
+import { register } from '@/api/user'
 
 const { Title } = Typography
 
 const Register: FunctionComponent = () => {
-  const onFinish = (values: unknown) => {
-    console.log('Success:', values)
+  const nav = useNavigate()
+  const { run: registerHandle } = useRequest((values: LoginType) => register(values), {
+    manual: true,
+    onSuccess: () => {
+      nav(RouterEnum.LOGIN)
+    },
+    onError: error => {
+      console.log(error)
+    },
+  })
+  const onFinish = (values: LoginType) => {
+    registerHandle(values)
   }
 
   const onFinishFailed = (errorInfo: unknown) => {
@@ -71,6 +84,14 @@ const Register: FunctionComponent = () => {
             ]}
           >
             <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            label="昵称"
+            name="nickname"
+            rules={[{ required: false, message: '请输入昵称' }]}
+          >
+            <Input />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
