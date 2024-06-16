@@ -3,16 +3,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import { RouterEnum } from '../../router/routerMap'
 import { Button, Space, message } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
-import { useRequest } from 'ahooks'
-import { getUserInfo } from '@/api/user'
 import { removeToken } from '@/utils/userToken'
+import useGetUserInfo from '@/hooks/useGetUserInfo'
+import { useDispatch } from 'react-redux'
+import { logoutReducer } from '@/store/userReducer'
 
 const UserInfo: FunctionComponent = () => {
-  const { data } = useRequest(getUserInfo)
-  const { username, nickname } = data || {}
+  const { username, nickname } = useGetUserInfo()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const logout = () => {
     removeToken()
+    dispatch(logoutReducer())
     navigate(RouterEnum.LOGIN)
     message.success('退出成功')
   }

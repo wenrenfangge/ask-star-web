@@ -5,12 +5,16 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import zhCN from 'antd/es/locale/zh_CN'
 import { ConfigProvider } from 'antd'
+import { Provider } from 'react-redux'
+import { storeConfig } from '@/store/index'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <ConfigProvider locale={zhCN}>
-      <App />
+      <Provider store={storeConfig}>
+        <App />
+      </Provider>
     </ConfigProvider>
   </React.StrictMode>
 )
