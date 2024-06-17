@@ -4,7 +4,7 @@ import { RouterEnum } from '../../router/routerMap'
 import { Button, Space, message } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import { removeToken } from '@/utils/userToken'
-import useGetUserInfo from '@/hooks/useGetUserInfo'
+import { useGetUserInfo } from '@/hooks/useGetUserInfo'
 import { useDispatch } from 'react-redux'
 import { logoutReducer } from '@/store/userReducer'
 

@@ -4,7 +4,7 @@ import { UserInfoType, UserStateType } from '@/types/store/user'
 import { useRequest } from 'ahooks'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import useGetUserInfo from './useGetUserInfo'
+import { useGetUserInfo } from './useGetUserInfo'
 
 const loadUserInfoData = () => {
   const [waitingUserData, setWaitingUserData] = useState<boolean>(true)
@@ -27,6 +27,7 @@ const loadUserInfoData = () => {
 
   useEffect(() => {
     if (username) {
+      setWaitingUserData(false)
       return
     }
     // 加载用户信息数据

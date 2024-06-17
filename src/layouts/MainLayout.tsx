@@ -6,16 +6,18 @@ import styles from './MainLayout.module.scss'
 import Logo from '../components/Logo'
 import UserInfo from '../components/UserInfo'
 import useLoadUserInfoData from '@/hooks/useLoadUserInfoData'
+import { useNavPage } from '@/hooks/useNavPage'
 
 const { Header, Content, Footer } = Layout
 
 const MainLayout: FunctionComponent = () => {
   const { waitingUserData } = useLoadUserInfoData()
+  useNavPage(waitingUserData)
   return (
     <Layout>
       <Header className={styles.header}>
         <div className={styles.left}>
-          <Logo />{' '}
+          <Logo />
         </div>
         <div className={styles.right}>
           <UserInfo />
