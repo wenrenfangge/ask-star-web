@@ -1,9 +1,9 @@
 import { ActionTipsConfig, ResponseDataType } from '@/types/axios'
-import { QuestionCardRequest, QuestionCardTypes } from '@/types/question'
+import { QuestionCardRequest, QuestionCardTypes, QuestionInfoResponse } from '@/types/question'
 import { request, actionRequest } from '@/utils/request'
 
 // 获取单个问卷信息
-export const getQuestionInfo = (id: string): Promise<ResponseDataType<QuestionCardTypes>> => {
+export const getQuestionInfo = (id: string): Promise<QuestionInfoResponse> => {
   return request({
     url: `/api/question/${id}`,
     method: 'get',

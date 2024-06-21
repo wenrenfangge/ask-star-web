@@ -1,8 +1,8 @@
-import { useLoadQuestionData } from '@/hooks/useLoadQuestionData'
+import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 import React, { FunctionComponent } from 'react'
 
 const Stat: FunctionComponent = () => {
-  const { loading, data } = useLoadQuestionData()
+  const { loading, error } = useLoadQuestionData()
   return <div>Stat</div>
 }
 

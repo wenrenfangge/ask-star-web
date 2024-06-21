@@ -9,8 +9,7 @@ const QuestionLayout: FunctionComponent = () => {
   const { waitingUserData } = useLoadUserInfoData()
   useNavPage(waitingUserData)
   return (
-    <div>
-      <div>QuestionLayout</div>
+    <div style={{ height: '100vh' }}>
       <Layout>
         <Content>
           {waitingUserData ? (

@@ -1,6 +1,3 @@
-export type StoreStateType = {
-  user: UserStateType
-}
 export type UserStateType = {
   // 用户信息
   userInfo: UserInfoType
