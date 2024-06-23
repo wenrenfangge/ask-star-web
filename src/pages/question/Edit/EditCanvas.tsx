@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, MouseEvent } from 'react'
 import classnames from 'classnames'
 import styles from './EditCanvas.module.scss'
 import { EditCanvasProps } from '@/types/question/editCanvas'
@@ -7,6 +7,8 @@ import { useGetComponentInfo } from '@/hooks/useGetComponentInfo'
 import { ComponentInfoType } from '@/types/store/component'
 import { getComponentByType } from '@/components/Generator'
 import { QuestionComponentInfo } from '@/types/question'
+import { useDispatch } from 'react-redux'
+import { changeSelectedId } from '@/store/componentsReducer'
 
 const getComponent = (componentInfo: ComponentInfoType) => {
   const { type, props, fe_id } = componentInfo
@@ -18,9 +20,9 @@ const getComponent = (componentInfo: ComponentInfoType) => {
   return <Component key={fe_id} {...props}></Component>
 }
 const EditCanvas: FunctionComponent<EditCanvasProps> = props => {
-  const { componentList } = useGetComponentInfo()
+  const { componentList, selectedId } = useGetComponentInfo()
+  const dispatch = useDispatch()
   const { loading } = props
-  const [currentComponentId, setCurrentComponentId] = React.useState<string>('')
   if (loading) {
     return (
       <div style={{ textAlign: 'center', marginTop: 60 }}>
@@ -28,8 +30,9 @@ const EditCanvas: FunctionComponent<EditCanvasProps> = props => {
       </div>
     )
   }
-  const onClickComponent = (id: string) => {
-    setCurrentComponentId(id)
+  const onClickComponent = (event: MouseEvent, id: string) => {
+    event.stopPropagation()
+    dispatch(changeSelectedId(id))
   }
   return (
     <div className={styles['canvas__wrapper']}>
@@ -37,13 +40,13 @@ const EditCanvas: FunctionComponent<EditCanvasProps> = props => {
         const { fe_id } = componentInfo
         const wrapperClass = classnames({
           [styles['component-wrapper']]: true,
-          [styles.selected]: currentComponentId === fe_id,
+          [styles.selected]: selectedId === fe_id,
         })
         return (
           <div
             className={wrapperClass}
             key={componentInfo.fe_id}
-            onClick={() => onClickComponent(fe_id)}
+            onClick={(e: MouseEvent) => onClickComponent(e, fe_id)}
           >
             {getComponent(componentInfo)}
           </div>

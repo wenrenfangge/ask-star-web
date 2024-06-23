@@ -1,7 +1,7 @@
 .header-container {
     padding: 12px 0;
     background-color: #fff;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #e8e8e8;
 
     .header-content {
         display: flex;
@@ -9,14 +9,22 @@
         align-items: center;
         margin: 0 24px;
 
+        h1 {
+            font-size: 18px;
+            margin: 0;
+            line-height: 1;
+        }
+
         .left {
             flex: 1;
         }
         .main {
             flex: 1;
+            text-align: center;
         }
         .right {
             flex: 1;
+            text-align: right;
         }
     }
 }

@@ -10,4 +10,5 @@ export type ComponentInfoType = {
 
 export type ComponentInfoStateType = {
   componentList: Array<ComponentInfoType>
+  selectedId: string
 }

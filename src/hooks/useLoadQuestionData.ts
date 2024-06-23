@@ -27,6 +27,7 @@ export const useLoadQuestionData = () => {
       return
     }
     const { title, components } = data as QuestionInfoResponse
+    const selectedId = components.length > 0 ? components[0].id : ''
     const payload: ComponentInfoStateType = {
       componentList: components.map(item => {
         return {
@@ -34,9 +35,9 @@ export const useLoadQuestionData = () => {
           fe_id: item.id,
         }
       }),
+      selectedId: selectedId,
     }
     dispatch(resetComponents(payload))
-    console.log(data)
   }, [data])
   return {
     loading,

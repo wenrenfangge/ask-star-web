@@ -27,7 +27,8 @@ export interface QuestionCardEvents {
 export type QuestionComponentType = {
   title: string
   type: QuestionComponentTypeEnum
-  Component?: React.FC<GeneratorPropsType>
+  Component: React.FC<GeneratorPropsType>
+  PropsComponent: React.FC<GeneratorPropsType>
   defaultProps: GeneratorPropsType
 }
 
@@ -45,6 +46,7 @@ export interface QuestionComponentInfo {
   title: string
   type: QuestionComponentTypeEnum
   Component: FunctionComponent<GeneratorPropsType>
+  PropsComponent: React.FC<GeneratorPropsType>
   props: GeneratorPropsType
   defaultProps?: GeneratorPropsType
 }
