@@ -8,7 +8,7 @@ const rules = {
   isCenter: [{ required: true, message: '请选择标题是否居中' }],
 }
 export const PropsComponent: FunctionComponent<VTitlePropsType> = (props: VTitlePropsType) => {
-  const { text, level, isCenter, onChange } = props
+  const { text, level, isCenter, onChange, disabled } = props
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -27,6 +27,7 @@ export const PropsComponent: FunctionComponent<VTitlePropsType> = (props: VTitle
       layout="vertical"
       initialValues={{ text, level, isCenter }}
       onChange={onChangeHandle}
+      disabled={disabled}
     >
       <Form.Item
         name={VTitleFormInitial.text.propName}
@@ -40,12 +41,8 @@ export const PropsComponent: FunctionComponent<VTitlePropsType> = (props: VTitle
         <Select options={VTitleFormInitial.level.options}></Select>
       </Form.Item>
 
-      <Form.Item
-        name={VTitleFormInitial.isCenter.propName}
-        label={VTitleFormInitial.isCenter.label}
-        valuePropName="checked"
-      >
-        <Checkbox>剧中显示</Checkbox>
+      <Form.Item name={VTitleFormInitial.isCenter.propName} valuePropName="checked">
+        <Checkbox>{VTitleFormInitial.isCenter.label}</Checkbox>
       </Form.Item>
     </Form>
   )

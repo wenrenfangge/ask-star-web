@@ -7,7 +7,7 @@ const rules = {
   placeholder: [{ required: true, message: '请输入占位符' }],
 }
 export const PropsComponent: FunctionComponent<VInputPropsType> = (props: VInputPropsType) => {
-  const { title, placeholder, onChange } = props
+  const { title, placeholder, onChange, disabled } = props
   const [form] = Form.useForm()
   useEffect(() => {
     // 初始化表单
@@ -32,6 +32,7 @@ export const PropsComponent: FunctionComponent<VInputPropsType> = (props: VInput
         placeholder,
       }}
       onValuesChange={onChangeHandle}
+      disabled={disabled}
     >
       <Form.Item
         label={VInputFormInitial.title.label}

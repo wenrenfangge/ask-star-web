@@ -35,6 +35,7 @@ export type QuestionComponentType = {
 export enum QuestionComponentTypeEnum {
   VInput = 'VInput',
   VTitle = 'VTitle',
+  VParagraph = 'VParagraph',
 }
 export interface QuestionInfoResponse {
   title: string

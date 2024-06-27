@@ -9,6 +9,7 @@ import { getComponentByType } from '@/components/Generator'
 import { QuestionComponentInfo } from '@/types/question'
 import { useDispatch } from 'react-redux'
 import { changeSelectedId } from '@/store/componentsReducer'
+import { useBindCanvasKeyEvents } from '@/hooks/useBindCanvasKeyEvents'
 
 const getComponent = (componentInfo: ComponentInfoType) => {
   const { type, props, fe_id } = componentInfo
@@ -22,6 +23,7 @@ const getComponent = (componentInfo: ComponentInfoType) => {
 const EditCanvas: FunctionComponent<EditCanvasProps> = props => {
   const { componentList, selectedId } = useGetComponentInfo()
   const dispatch = useDispatch()
+  useBindCanvasKeyEvents()
   const { loading } = props
   if (loading) {
     return (
@@ -36,22 +38,25 @@ const EditCanvas: FunctionComponent<EditCanvasProps> = props => {
   }
   return (
     <div className={styles['canvas__wrapper']}>
-      {componentList.map(componentInfo => {
-        const { fe_id } = componentInfo
-        const wrapperClass = classnames({
-          [styles['component-wrapper']]: true,
-          [styles.selected]: selectedId === fe_id,
-        })
-        return (
-          <div
-            className={wrapperClass}
-            key={componentInfo.fe_id}
-            onClick={(e: MouseEvent) => onClickComponent(e, fe_id)}
-          >
-            {getComponent(componentInfo)}
-          </div>
-        )
-      })}
+      {componentList
+        .filter(c => !c.isHidden)
+        .map(componentInfo => {
+          const { fe_id, isLocked } = componentInfo
+          const wrapperClass = classnames({
+            [styles['component-wrapper']]: true,
+            [styles.selected]: selectedId === fe_id,
+            [styles.locked]: isLocked,
+          })
+          return (
+            <div
+              className={wrapperClass}
+              key={componentInfo.fe_id}
+              onClick={(e: MouseEvent) => onClickComponent(e, fe_id)}
+            >
+              {getComponent(componentInfo)}
+            </div>
+          )
+        })}
       {/* <div className={wrapperClass} onClick={() => onClickComponent(1)}>
         <VTitle />
       </div>

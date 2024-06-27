@@ -1,12 +1,13 @@
 import VTitleComponentConfig, { VTitlePropsType } from './VTitle'
 import VInputComponentConfig, { VInputPropsType } from './VInput'
+import VParagraphComponentConfig, { VParagraphPropsType } from './VParagraph'
 import {
   QuestionComponentTypeEnum,
   QuestionComponentInfo,
   QuestionComponentType,
 } from '@/types/question/index'
 
-export type GeneratorPropsType = VTitlePropsType & VInputPropsType
+export type GeneratorPropsType = VTitlePropsType & VInputPropsType & VParagraphPropsType
 /**
  * 组件配置组类型
  */
@@ -26,6 +27,7 @@ export type ComponentConfigType = {
 const initialMapData: Array<any> = [
   [QuestionComponentTypeEnum.VTitle, VTitleComponentConfig],
   [QuestionComponentTypeEnum.VInput, VInputComponentConfig],
+  [QuestionComponentTypeEnum.VParagraph, VParagraphComponentConfig],
 ]
 const componetsMap = new Map<QuestionComponentTypeEnum, QuestionComponentInfo>(initialMapData)
 /**
@@ -50,6 +52,11 @@ export const ComponentConfigGroup: Array<ComponentConfigGroupType> = [
         label: '标题',
         componentId: 'VTitle',
         component: VTitleComponentConfig,
+      },
+      {
+        label: '段落',
+        componentId: 'VParagraph',
+        component: VParagraphComponentConfig,
       },
     ],
   },

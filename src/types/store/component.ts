@@ -6,9 +6,12 @@ export type ComponentInfoType = {
   title: string
   type: QuestionComponentTypeEnum
   props: GeneratorPropsType
+  isHidden?: boolean
+  isLocked?: boolean
 }
 
 export type ComponentInfoStateType = {
   componentList: Array<ComponentInfoType>
   selectedId: string
+  copiedComponent: ComponentInfoType | null
 }

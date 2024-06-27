@@ -26,7 +26,7 @@ export const useLoadQuestionData = () => {
     if (!data) {
       return
     }
-    const { title, components } = data as QuestionInfoResponse
+    const { components } = data as QuestionInfoResponse
     const selectedId = components.length > 0 ? components[0].id : ''
     const payload: ComponentInfoStateType = {
       componentList: components.map(item => {
@@ -36,6 +36,7 @@ export const useLoadQuestionData = () => {
         }
       }),
       selectedId: selectedId,
+      copiedComponent: null,
     }
     dispatch(resetComponents(payload))
   }, [data])
