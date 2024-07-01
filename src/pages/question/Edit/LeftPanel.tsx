@@ -3,6 +3,7 @@ import { AppstoreAddOutlined } from '@ant-design/icons'
 import { Space, Tabs } from 'antd'
 import React, { FunctionComponent } from 'react'
 import { ComponentLib } from './ComponentLib'
+import styles from './Panel.module.scss'
 
 const items: Array<PanelTabsType> = [
   {
@@ -27,7 +28,7 @@ const items: Array<PanelTabsType> = [
   },
 ]
 const LeftPanel: FunctionComponent = () => {
-  return <div>{<Tabs items={items}></Tabs>}</div>
+  return <div className={styles.scroll}>{<Tabs items={items}></Tabs>}</div>
 }
 
 export default LeftPanel

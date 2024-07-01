@@ -114,7 +114,7 @@ const Trash: FunctionComponent = () => {
           rowKey={'_id'}
           rowSelection={{
             type: 'checkbox',
-            onChange: (selectedRowKeys, selectedRows) => {
+            onChange: selectedRowKeys => {
               setSelectedIdsList(selectedRowKeys as Array<string>)
             },
           }}

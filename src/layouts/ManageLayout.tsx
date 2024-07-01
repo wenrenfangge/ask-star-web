@@ -1,3 +1,11 @@
+/*
+ * @Author: 闻人放歌 wenrenfangge@gmail.com
+ * @Date: 2024-06-03 19:48:41
+ * @LastEditors: 闻人放歌 wenrenfangge@gmail.com
+ * @LastEditTime: 2024-06-27 15:33:37
+ * @FilePath: /wenrenfangge-test/Users/wenrenfangge/Documents/study/react/ask-star-web/src/layouts/ManageLayout.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import React, { FunctionComponent } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import styles from './ManageLayout.module.scss'
@@ -10,11 +18,7 @@ import { useRequest } from 'ahooks'
 const ManageLayout: FunctionComponent = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const {
-    data,
-    loading,
-    run: handleCreateQuestion,
-  } = useRequest(createQuestion, {
+  const { loading, run: handleCreateQuestion } = useRequest(createQuestion, {
     manual: true,
     onSuccess: res => {
       const { id } = res || {}
