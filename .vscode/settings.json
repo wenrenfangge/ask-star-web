@@ -15,6 +15,7 @@
         "Popconfirm",
         "qrcode",
         "reduxjs",
+        "undoable",
         "uparrow"
     ]
 }

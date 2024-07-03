@@ -1,5 +1,18 @@
+/*
+ * @Author: 闻人放歌 wenrenfangge@gmail.com
+ * @Date: 2024-06-06 15:45:47
+ * @LastEditors: 闻人放歌 wenrenfangge@gmail.com
+ * @LastEditTime: 2024-07-03 09:41:13
+ * @FilePath: /wenrenfangge-test/Users/wenrenfangge/Documents/study/react/ask-star-web/src/api/question.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { ActionTipsConfig, ResponseDataType } from '@/types/axios'
-import { QuestionCardRequest, QuestionCardTypes, QuestionInfoResponse } from '@/types/question'
+import {
+  QuestionCardRequest,
+  QuestionCardTypes,
+  QuestionInfoResponse,
+  QuestionUpdateRequest,
+} from '@/types/question'
 import { request, actionRequest } from '@/utils/request'
 
 // 获取单个问卷信息
@@ -27,7 +40,10 @@ export function getQuestionList(
   })
 }
 // 更新答卷
-export const updateQuestion = (data: Partial<QuestionCardTypes>, messageTip?: ActionTipsConfig) => {
+export const updateQuestion = (
+  data: Partial<QuestionUpdateRequest>,
+  messageTip?: ActionTipsConfig
+) => {
   return actionRequest({
     url: `/api/question/${data._id}`,
     method: 'patch',

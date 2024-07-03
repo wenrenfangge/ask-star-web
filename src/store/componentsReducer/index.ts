@@ -6,6 +6,8 @@ import { getNextSelectedId, insertNewComponent } from './utils'
 import { message } from 'antd'
 import { cloneDeep } from 'lodash'
 import { nanoid } from 'nanoid'
+import { OnDragEndPropsType } from '@/types/dragSortable'
+import { arrayMove } from '@dnd-kit/sortable'
 
 const initialState: ComponentInfoStateType = {
   componentList: [],
@@ -23,10 +25,23 @@ export const componentsSlice = createSlice({
     ) => {
       return action.payload
     },
-    // 修改组件
+    // 修改选中组件
     changeSelectedId: produce((draft: ComponentInfoStateType, action: PayloadAction<string>) => {
       draft.selectedId = action.payload
     }),
+    // 修改layer标题
+    changeComponentTitle: produce(
+      (
+        draft: ComponentInfoStateType,
+        action: PayloadAction<Pick<ComponentInfoType, 'fe_id' | 'title'>>
+      ) => {
+        const { fe_id, title } = action.payload
+        const currentComponent = draft.componentList.find(item => item.fe_id === fe_id)
+        if (currentComponent) {
+          currentComponent.title = title
+        }
+      }
+    ),
     // 添加组件
     addComponent: produce(
       (draft: ComponentInfoStateType, action: PayloadAction<ComponentInfoType>) => {
@@ -146,10 +161,19 @@ export const componentsSlice = createSlice({
       }
       draft.selectedId = componentList[selectedIndex + 1].fe_id
     }),
-    // TODO 上移
-    // TODO 下移
-    // TODO 撤销
-    // TODO 重做
+    // 移动组件位置
+    moveComponent: produce(
+      (draft: ComponentInfoStateType, action: PayloadAction<OnDragEndPropsType>) => {
+        const { componentList: currentComponentList, selectedId } = draft
+        if (selectedId === '') {
+          message.error('请先选择组件后再操作！')
+          return
+        }
+        const { oldIndex, newIndex } = action.payload
+        const newComponentList = arrayMove(currentComponentList, oldIndex, newIndex)
+        draft.componentList = newComponentList
+      }
+    ),
   },
 })
 export const {
@@ -164,5 +188,7 @@ export const {
   insertComponent,
   selectPrevComponent,
   selectNextComponent,
+  changeComponentTitle,
+  moveComponent,
 } = componentsSlice.actions
 export default componentsSlice.reducer

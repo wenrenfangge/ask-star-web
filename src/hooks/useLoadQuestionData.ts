@@ -1,5 +1,14 @@
+/*
+ * @Author: 闻人放歌 wenrenfangge@gmail.com
+ * @Date: 2024-06-19 14:37:23
+ * @LastEditors: 闻人放歌 wenrenfangge@gmail.com
+ * @LastEditTime: 2024-07-02 14:52:24
+ * @FilePath: /wenrenfangge-test/Users/wenrenfangge/Documents/study/react/ask-star-web/src/hooks/useLoadQuestionData.ts
+ * @Description: 加载问卷信息hook
+ */
 import { getQuestionInfo } from '@/api/question'
 import { resetComponents } from '@/store/componentsReducer'
+import { resetPageInfo } from '@/store/pageInfoReducer'
 import { QuestionInfoResponse } from '@/types/question'
 import { ComponentInfoStateType } from '@/types/store/component'
 import { useRequest } from 'ahooks'
@@ -26,7 +35,7 @@ export const useLoadQuestionData = () => {
     if (!data) {
       return
     }
-    const { components } = data as QuestionInfoResponse
+    const { components, title, desc, js, css } = data as QuestionInfoResponse
     const selectedId = components.length > 0 ? components[0].id : ''
     const payload: ComponentInfoStateType = {
       componentList: components.map(item => {
@@ -39,6 +48,7 @@ export const useLoadQuestionData = () => {
       copiedComponent: null,
     }
     dispatch(resetComponents(payload))
+    dispatch(resetPageInfo({ title, desc, js, css }))
   }, [data])
   return {
     loading,

@@ -4,6 +4,7 @@ import { Space, Tabs } from 'antd'
 import React, { FunctionComponent } from 'react'
 import { ComponentLib } from './ComponentLib'
 import styles from './Panel.module.scss'
+import { Layer } from './Layer'
 
 const items: Array<PanelTabsType> = [
   {
@@ -24,7 +25,7 @@ const items: Array<PanelTabsType> = [
         图层
       </Space>
     ),
-    children: <div></div>,
+    children: <Layer />,
   },
 ]
 const LeftPanel: FunctionComponent = () => {
