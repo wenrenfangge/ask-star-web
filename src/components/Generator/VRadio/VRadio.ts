@@ -2,7 +2,7 @@
  * @Author: 闻人放歌 wenrenfangge@gmail.com
  * @Date: 2024-06-28 15:11:12
  * @LastEditors: 闻人放歌 wenrenfangge@gmail.com
- * @LastEditTime: 2024-06-30 10:38:41
+ * @LastEditTime: 2024-07-04 09:32:09
  * @FilePath: /wenrenfangge-test/Users/wenrenfangge/Documents/study/react/ask-star-web/src/components/Generator/VRadio/VRadio.ts
  * @Description: VRadio type
  */
@@ -37,7 +37,7 @@ export const defaultVRadioProps: VRadioPropsType = {
     { label: '选项3', value: 'option3' },
   ],
   isVertical: false,
-  value: 'option1',
+  value: '',
 }
 
 export const VRadioFormInitial: VFormInitialType = {
