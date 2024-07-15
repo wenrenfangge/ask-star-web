@@ -2,22 +2,28 @@
  * @Author: 闻人放歌 wenrenfangge@gmail.com
  * @Date: 2024-06-03 18:58:37
  * @LastEditors: 闻人放歌 wenrenfangge@gmail.com
- * @LastEditTime: 2024-07-04 14:32:58
+ * @LastEditTime: 2024-07-08 16:24:32
  * @FilePath: /wenrenfangge-test/Users/wenrenfangge/Documents/study/react/ask-star-web/src/pages/question/Stat/index.tsx
  * @Description: 填写问卷
  */
 import { useGetPageInfo } from '@/hooks/useGetPageInfo'
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 import { Button, Result, Spin } from 'antd'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './index.module.scss'
 import { StatHeader } from './StatHeader'
+import ComponentList from './ComponentList'
+import { QuestionComponentTypeEnum } from '@/types/question'
+import { StatPage } from './StatPage'
 
 const Stat: FunctionComponent = () => {
   const { loading } = useLoadQuestionData()
   const { isPublished } = useGetPageInfo()
   const navigate = useNavigate()
+
+  const [selectedComponentId, setSelectedComponentId] = useState('')
+  const [selectedType, setSelectedType] = useState<QuestionComponentTypeEnum | unknown>('')
 
   const generateContent = () => {
     if (!isPublished) {
@@ -38,8 +44,20 @@ const Stat: FunctionComponent = () => {
     }
     return (
       <>
-        <div className={styles.left}></div>
-        <div className={styles.main}></div>
+        <div className={styles.left}>
+          <ComponentList
+            selectedComponentId={selectedComponentId}
+            setSelectedComponentId={setSelectedComponentId}
+            setSelectedType={setSelectedType}
+          />
+        </div>
+        <div className={styles.main}>
+          <StatPage
+            selectedComponentId={selectedComponentId}
+            setSelectedComponentId={setSelectedComponentId}
+            setSelectedType={setSelectedType}
+          />
+        </div>
         <div className={styles.right}></div>
       </>
     )

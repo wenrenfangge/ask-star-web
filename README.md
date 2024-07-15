@@ -1,46 +1,100 @@
-# Getting Started with Create React App
+# 问卷低代码平台项目
+## 项目介绍
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**本项目是我在工作之外抽时间学习react18、next.js，完善技术栈，并实战开发的一个问卷低代码平台项目**，该项目旨在提供一种快速创建和发布问卷的方式，用户可以通过拖拽组件创建问卷，设置组件属性，导出问卷为Excel文件，预览问卷效果，保存问卷为模板，导入问卷模板等。
 
-## Available Scripts
+B端使用React18开发。
+C端使用Next.js开发。
+mock服务使用node.js
 
-In the project directory, you can run:
+目前项目仍在开发中。
 
-### `npm start`
+## 技术栈
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+:star: React 18
+:star: TypeScript
+:star: Redux
+:star: React-Redux
+:star: React-Router
+:star: Ant Design
+:star: Axios
+:star: Webpack
+:star: Babel
+:star: ESLint
+:star: Prettier
+:star: Husky
+:star: Next.js
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 功能特点
 
-### `npm test`
+- 支持拖拽组件创建问卷
+- 支持设置组件属性，如标题、选项等
+- 支持导出问卷为Excel文件（待开发）
+- 支持预览问卷效果
+- 支持保存问卷为模板
+- 支持导入问卷模板
+- 数据统计
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    
+## 如何使用
 
-### `npm run build`
+1. 克隆项目到本地
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone https://github.com/wenrenfangge/ask-star-web.git
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. 安装依赖
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd ask-star-web
+npm install
+```
 
-### `npm run eject`
+3. 启动项目
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+npm start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. 访问项目
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+在浏览器中访问 `http://localhost:3000` 即可看到项目运行效果。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 注意事项
 
-## Learn More
+- 本项目仅供学习和参考，请勿用于商业用途。
+`
+- 本项目中的数据均为模拟数据，实际使用时请替换为真实数据。
+- 本项目中的代码仅供参考，请勿直接复制粘贴，建议根据实际需求进行修改和优化。
+- 本项目中的图片资源来源于网络，如有侵权，请联系作者删除。
+- 本项目的开发过程中，我参考了一些优秀的开源项目，感谢他们的贡献。
+## 联系方式
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+如有任何问题，请通过以下方式联系我：
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 邮箱：wenrenfangge@vip.qq.com
+- GitHub：https://github.com/wenrenfangge
+## 版权声明
+
+本项目中的所有代码和资源均由作者原创，未经作者许可，不得用于商业用途。
+
+## mock服务
+暂不提供，项目开发完毕会提供mock服务和正式服务端。
+
+## 致谢
+
+感谢以下开源项目对我的帮助：
+
+- React
+- Redux
+- React-Redux
+- React-Router
+- Ant Design
+- Axios
+- Webpack
+- Babel
+- ESLint
+- Prettier
+- Husky
+- 以及其他优秀的开源项目
